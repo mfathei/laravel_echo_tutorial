@@ -1,0 +1,46 @@
+1-create pusher application
+2-composer require pusher/pusher-php-server
+3-npm install --save pusher-js
+4-npm install --save laravel-echo
+5-config/app.php uncomment this line :  App\Providers\BroadcastServiceProvider::class,
+6-config/broadcasting.php add these options:
+'options' => [
+    'cluster' => env('PUSHER_APP_CLUSTER'),
+    'encrypted' => true
+],
+7- .env add these options:
+PUSHER_APP_ID=546183
+PUSHER_APP_KEY=6df569e3ec7d0107c96f
+PUSHER_APP_SECRET=25b0c83343607eaf2b87
+PUSHER_APP_CLUSTER=eu
+
+8- .env change this option to :
+BROADCAST_DRIVER=pusher
+
+9-make sure u have this tag in app.blade.php :     <meta name="csrf-token" content="{{ csrf_token() }}">
+10- in app.js comment these lines:
+// Vue.component('example-component', require('./components/ExampleComponent.vue'));
+//
+// const app = new Vue({
+//     el: '#app'
+// });
+
+11- in bootstrap.js uncomment these lines:
+import Echo from 'laravel-echo'
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'your-pusher-key'
+});
+
+12- in bootstrap.js set these configs:
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '6df569e3ec7d0107c96f',
+    cluster: 'eu',
+    encrypted: true
+});
+
+13- npm run dev
