@@ -17,24 +17,70 @@
 
     <h3>Comments:</h3>
     <div style="margin-bottom:50px;">
-      <textarea class="form-control" rows="3" name="body" placeholder="Leave a comment"></textarea>
-      <button class="btn btn-success" style="margin-top:10px">Save Comment</button>
+      <textarea class="form-control" rows="3" name="body" placeholder="Leave a comment" v-model="commentsBox" required></textarea>
+      <button class="btn btn-success" style="margin-top:10px" @click.prevent="saveComment">Save Comment</button>
     </div>
 
 
-    <div class="media" style="margin-top:20px;">
+    <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
         <a href="#">
           <img class="media-object" src="http://placeimg.com/80/80" alt="...">
         </a>
       </div>
       <div class="media-body">
-        <h4 class="media-heading">John Doe said...</h4>
+        <h4 class="media-heading">@{{ comment.user.name }} said...</h4>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          @{{ comment.body }}
         </p>
-        <span style="color: #aaa;">on Dec 15, 2017</span>
+        <span style="color: #aaa;">on @{{ comment.created_at }}</span>
       </div>
     </div>
   </div>
+@endsection
+
+@section('scripts')
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        props: {},
+        data(){
+            return {
+                comments: {},
+                commentsBox: '',
+                post: {!! $post->toJson() !!},
+                user: {!! Auth::check()? Auth::user()->toJson(): 'null' !!}
+            };
+        },
+        mounted(){
+            this.getComments();
+        },
+        methods: {
+            getComments(){
+                axios.get(`/api/posts/${this.post.id}/comments`)
+                    .then((response) => {
+                        this.comments = response.data;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
+            saveComment(){
+                axios.post(`/api/posts/${this.post.id}/comment`, {
+                        'api_token' : this.user.api_token,
+                        'body': this.commentsBox
+                    })
+                    .then((response) => {
+                        console.log(response.data);
+                        // this.comments.unshift(response.data);
+                        this.getComments();
+                        this.commentsBox = '';
+                    })
+                    .catch((error) => console.log(error));
+            }
+        }
+    });
+
+</script>
 @endsection
