@@ -16,11 +16,14 @@
     <hr />
 
     <h3>Comments:</h3>
-    <div style="margin-bottom:50px;">
+    <div style="margin-bottom:50px;" v-if="user">
       <textarea class="form-control" rows="3" name="body" placeholder="Leave a comment" v-model="commentsBox" required></textarea>
       <button class="btn btn-success" style="margin-top:10px" @click.prevent="saveComment">Save Comment</button>
     </div>
-
+    <div v-else>
+        <h4>You must be logged in to submit a comment.</h4>
+        <a href="{{ url('/login') }}">Login Now &gt;&gt;</a>
+    </div>
 
     <div class="media" style="margin-top:20px;" v-for="comment in comments">
       <div class="media-left">
@@ -55,6 +58,7 @@
         },
         mounted(){
             this.getComments();
+            this.listen();
         },
         methods: {
             getComments(){
@@ -73,11 +77,18 @@
                     })
                     .then((response) => {
                         console.log(response.data);
-                        // this.comments.unshift(response.data);
-                        this.getComments();
+                        this.comments.unshift(response.data);
+                        // this.getComments();
                         this.commentsBox = '';
                     })
                     .catch((error) => console.log(error));
+            },
+            listen(){
+                Echo.channel('posts.'+ this.post.id)
+                    .listen('NewComment', (comment) => {
+                        console.log(comment);
+                        this.comments.unshift(comment);
+                    });
             }
         }
     });

@@ -1,0 +1,134 @@
+{
+	"info": {
+		"name": "laravel-echo-tutorial",
+		"_postman_id": "b37a251e-cf1b-4f7a-ac60-5551f7efa0cf",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8000/api/user?api_token=Uh1RNaowmBpgZqt9MAfDW5pmiJYKYTmIigUxSFX4lHhslJLac4kDFIUxvTAi",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/user?api_token=Uh1RNaowmBpgZqt9MAfDW5pmiJYKYTmIigUxSFX4lHhslJLac4kDFIUxvTAi",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"user"
+					],
+					"query": [
+						{
+							"key": "api_token",
+							"value": "Uh1RNaowmBpgZqt9MAfDW5pmiJYKYTmIigUxSFX4lHhslJLac4kDFIUxvTAi",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/api/posts/1/comments?api_token=Uh1RNaowmBpgZqt9MAfDW5pmiJYKYTmIigUxSFX4lHhslJLac4kDFIUxvTAi",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/posts/1/comments?api_token=Uh1RNaowmBpgZqt9MAfDW5pmiJYKYTmIigUxSFX4lHhslJLac4kDFIUxvTAi",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"posts",
+						"1",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "api_token",
+							"value": "Uh1RNaowmBpgZqt9MAfDW5pmiJYKYTmIigUxSFX4lHhslJLac4kDFIUxvTAi",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:8000/api/posts/1/comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "api_token",
+							"value": "jKUkiBypnPx8nOUWYnpt5HaEId7FXuxiqWDJ5uIPos3gAjZNxZtlxZxZzH8h",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "body",
+							"value": "This is the second comment.",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/posts/1/comment",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"posts",
+						"1",
+						"comment"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -7,6 +7,7 @@ use Illuminate\Validation\Validator;
 use App\Post;
 use App\Comment;
 use Auth;
+use App\Events\NewComment;
 
 class CommentController extends Controller
 {
@@ -56,6 +57,9 @@ class CommentController extends Controller
         $comment = $post->comments()->create($data);
 
         $comment = Comment::where('id', $comment->id)->with('user')->first();
+
+        // event(new NewComment($comment));
+        broadcast(new NewComment($comment))->toOthers();
 
         return response()->json($comment);
     }

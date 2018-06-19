@@ -44,3 +44,16 @@ window.Echo = new Echo({
 });
 
 13- npm run dev
+14- php artisan make:event NewComment
+15- in NewComment.php add 'implements ShouldBroadcastNow' or 'implements ShouldBroadcast'
+16- in NewComment.php change PrivateChannel to Channel to be a public channel that guests can be notified.
+17- in NewComment.php add method broadcastWith() that control the object sent by notification to be more secure
+18- in CommentController store function add this line : event(new NewComment($comment)); or broadcast(new NewComment($comment))->toOthers();
+19- in show.blade.php in vue code add this method and call it in mounted() :
+listen(){
+    Echo.channel('posts.'+ this.post.id)
+        .listen('NewComment', (comment) => {
+            this.comments.unshift(comment);
+        });
+}
+20- npm run dev
