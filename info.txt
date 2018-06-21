@@ -57,3 +57,18 @@ listen(){
         });
 }
 20- npm run dev
+
+
+================================= private channels =========================
+1- in NewComment.php change Channel to PrivateChannel:
+public function broadcastOn()
+{
+    // this makes dynamic channel
+    return new PrivateChannel('posts.'. $this->comment->post->id);
+}
+2- in show.blade.php change Echo.channel to Echo.private
+3- in routes/channels.php add this code :
+Broadcast::channel('posts.{id}', function ($user, $id) {
+    // return true;// will send to logged in users only
+    return $user->id == \App\Post::find($id)->user_id;// will send to the author of the post only
+});

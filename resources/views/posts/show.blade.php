@@ -84,7 +84,7 @@
                     .catch((error) => console.log(error));
             },
             listen(){
-                Echo.channel('posts.'+ this.post.id)
+                Echo.private('posts.'+ this.post.id)
                     .listen('NewComment', (comment) => {
                         console.log(comment);
                         this.comments.unshift(comment);
